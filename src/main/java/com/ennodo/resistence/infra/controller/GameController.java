@@ -19,13 +19,8 @@ public class GameController {
 	Game game;
 
 	@PostMapping("/init")
-	public ResponseEntity<Void> initGame(@RequestBody AllPlayersDTO playersDTO) {
+	public ResponseEntity<List<String>> initGame(@RequestBody AllPlayersDTO playersDTO) {
 		game = new Game(playersDTO);
-		return ResponseEntity.ok().build();
-	}
-
-	@GetMapping("/allPlayers")
-	public ResponseEntity<List<String>> allPlayers() {
 		return ResponseEntity.ok(game.getPlayers().stream().map(Player::getName).toList());
 	}
 

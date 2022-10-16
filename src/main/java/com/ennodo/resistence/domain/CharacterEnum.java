@@ -12,7 +12,8 @@ public enum CharacterEnum {
 	ASSASSINO("Espiões"),
 	FALSO_COMANDANTE("Espiões"),
 	RESISTENCIA(""),
-	ESPIAO("Espiões");
+	ESPIAO("Espiões"),
+	AGENTE_INVISIVEL("Espiões");
 
 	@Getter
 	private final String observer;
