@@ -1,0 +1,31 @@
+section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+body {    
+    padding: 3em;
+}
+
+span {
+    display: block;
+    text-align: center;
+}
+
+#observar {
+    font-size: 1.2rem;
+    color: rgb(233, 31, 31);
+}
+
+#funcao {
+    font-size: 20px;
+    font-weight: 600;
+    color: rgb(226, 185, 1);
+}
+
+#info {
+    width: 100%;
+    margin: 15px 0;
+}
