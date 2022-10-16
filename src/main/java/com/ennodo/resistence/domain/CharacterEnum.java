@@ -21,7 +21,8 @@ public enum CharacterEnum {
 	public static boolean acharEspiao(Player player) {
 		return ESPIAO.equals(player.characterEnum) ||
 				ASSASSINO.equals(player.characterEnum) ||
-				FALSO_COMANDANTE.equals(player.characterEnum);
+				FALSO_COMANDANTE.equals(player.characterEnum) ||
+				AGENTE_INVISIVEL.equals(player.characterEnum);
 	}
 
 	public static CharacterEnum byOrdinal(Integer ordinal) {

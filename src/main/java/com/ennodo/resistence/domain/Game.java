@@ -56,7 +56,7 @@ public class Game {
 				.findFirst().orElse(new Player("", 99));
 
 		switch (player.getCharacterEnum()) {
-			case COMANDANTE, FALSO_COMANDANTE, ASSASSINO, ESPIAO -> playersResponse = players.stream()
+			case COMANDANTE, FALSO_COMANDANTE, ASSASSINO, ESPIAO, AGENTE_INVISIVEL -> playersResponse = players.stream()
 					.filter(CharacterEnum::acharEspiao)
 					.toList();
 			case GUARDA_COSTAS ->  playersResponse = players.stream()
