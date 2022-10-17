@@ -31,7 +31,7 @@ public class Game {
 		do {
 			Integer character = getRandomNumber(0, 5);
 			if (character.equals(4)) {
-				if (charactersMap.get(character) < 1) {
+				if (charactersMap.get(character) < 2) {
 					characterGenerated = getCharacterGenerated(playersDTO, characterGenerated, character);
 				}
 			} else {
