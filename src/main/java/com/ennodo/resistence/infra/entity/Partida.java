@@ -3,6 +3,8 @@ package com.ennodo.resistence.infra.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -12,12 +14,13 @@ import javax.persistence.Table;
 @Table(name = "partida")
 public class Partida {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
 	private Integer id;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "id_jogo", nullable = false)
-	private Jogo idJogo;
+	private Jogo jogo;
 
 	@Column(name = "atual")
 	private Boolean atual;
@@ -30,7 +33,7 @@ public class Partida {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_grupo")
-	private GrupoPartida idGrupo;
+	private GrupoPartida grupo;
 
 	public Integer getId() {
 		return id;
@@ -40,12 +43,12 @@ public class Partida {
 		this.id = id;
 	}
 
-	public Jogo getIdJogo() {
-		return idJogo;
+	public Jogo getJogo() {
+		return jogo;
 	}
 
-	public void setIdJogo(Jogo idJogo) {
-		this.idJogo = idJogo;
+	public void setJogo(Jogo jogo) {
+		this.jogo = jogo;
 	}
 
 	public Boolean getAtual() {
@@ -72,12 +75,11 @@ public class Partida {
 		this.espioes = espioes;
 	}
 
-	public GrupoPartida getIdGrupo() {
-		return idGrupo;
+	public GrupoPartida getGrupo() {
+		return grupo;
 	}
 
-	public void setIdGrupo(GrupoPartida idGrupo) {
-		this.idGrupo = idGrupo;
+	public void setGrupo(GrupoPartida grupo) {
+		this.grupo = grupo;
 	}
-
 }

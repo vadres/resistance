@@ -18,12 +18,12 @@ public class JogoPersonagem {
 	@MapsId("idPersonagem")
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "id_personagem", nullable = false)
-	private Personagem idPersonagem;
+	private Personagem personagem;
 
 	@MapsId("idJogo")
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "id_jogo", nullable = false)
-	private Jogo idJogo;
+	private Jogo jogo;
 
 	@Column(name = "qtd_personagem", nullable = false)
 	private Integer qtdPersonagem;
@@ -36,20 +36,20 @@ public class JogoPersonagem {
 		this.id = id;
 	}
 
-	public Personagem getIdPersonagem() {
-		return idPersonagem;
+	public Personagem getPersonagem() {
+		return personagem;
 	}
 
-	public void setIdPersonagem(Personagem idPersonagem) {
-		this.idPersonagem = idPersonagem;
+	public void setPersonagem(Personagem personagem) {
+		this.personagem = personagem;
 	}
 
-	public Jogo getIdJogo() {
-		return idJogo;
+	public Jogo getJogo() {
+		return jogo;
 	}
 
-	public void setIdJogo(Jogo idJogo) {
-		this.idJogo = idJogo;
+	public void setJogo(Jogo jogo) {
+		this.jogo = jogo;
 	}
 
 	public Integer getQtdPersonagem() {
@@ -59,5 +59,4 @@ public class JogoPersonagem {
 	public void setQtdPersonagem(Integer qtdPersonagem) {
 		this.qtdPersonagem = qtdPersonagem;
 	}
-
 }

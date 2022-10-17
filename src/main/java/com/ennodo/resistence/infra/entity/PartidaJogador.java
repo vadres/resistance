@@ -7,6 +7,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.IntStream;
 
 @Entity
 @Table(name = "partida_jogador")
@@ -17,16 +20,16 @@ public class PartidaJogador {
 	@MapsId("idJogador")
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "id_jogador", nullable = false)
-	private Jogador idJogador;
+	private Jogador jogador;
 
 	@MapsId("idPartida")
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "id_partida", nullable = false)
-	private Partida idPartida;
+	private Partida partida;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "id_personagem", nullable = false)
-	private Personagem idPersonagem;
+	private Personagem personagem;
 
 	public PartidaJogadorId getId() {
 		return id;
@@ -36,28 +39,32 @@ public class PartidaJogador {
 		this.id = id;
 	}
 
-	public Jogador getIdJogador() {
-		return idJogador;
+	public Jogador getJogador() {
+		return jogador;
 	}
 
-	public void setIdJogador(Jogador idJogador) {
-		this.idJogador = idJogador;
+	public void setJogador(Jogador jogador) {
+		this.jogador = jogador;
 	}
 
-	public Partida getIdPartida() {
-		return idPartida;
+	public Partida getPartida() {
+		return partida;
 	}
 
-	public void setIdPartida(Partida idPartida) {
-		this.idPartida = idPartida;
+	public void setPartida(Partida partida) {
+		this.partida = partida;
 	}
 
-	public Personagem getIdPersonagem() {
-		return idPersonagem;
+	public Personagem getPersonagem() {
+		return personagem;
 	}
 
-	public void setIdPersonagem(Personagem idPersonagem) {
-		this.idPersonagem = idPersonagem;
+	public void setPersonagem(Personagem pPersonagem) {
+		this.personagem = pPersonagem;
 	}
 
+	public List<Integer> getIds() {
+		return Arrays.stream(personagem.getIdsInfo().split(","))
+				.map(Integer::valueOf).toList();
+	}
 }

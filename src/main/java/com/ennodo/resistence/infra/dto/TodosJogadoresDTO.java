@@ -7,6 +7,6 @@ import java.util.List;
 
 @Getter
 @Setter
-public class AllPlayersDTO {
-	List<String> players;
+public class TodosJogadoresDTO {
+	List<JogadorDTO> jogadores;
 }
