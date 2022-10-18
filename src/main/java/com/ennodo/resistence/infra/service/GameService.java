@@ -61,7 +61,7 @@ public class GameService {
 		partida.setJogo(jogo);
 		partida = partidaRepository.save(partida);
 
-		List<PartidaJogador> partidaJogadores = new ArrayList<>();
+		final List<PartidaJogador> partidaJogadores = new ArrayList<>();
 		int i = 0;
 		for (Jogador jogador: jogadores) {
 			JogoPersonagem jogoPersonagem = jogoPersonagems.get(i);
@@ -72,17 +72,16 @@ public class GameService {
 			partidaJogador.setPartida(partida);
 			partidaJogador.setPersonagem(jogoPersonagem.getPersonagem());
 			partidaJogador.setJogador(jogador);
-		}
 
-		final List<PartidaJogador> partidaJogadoresFinal = partidaJogadorRepository
-				.saveAll(partidaJogadores);
+			partidaJogadores.add(partidaJogadorRepository.save(partidaJogador));
+		}
 
 		return partidaJogadores.stream().map(partidaJogador -> {
 			return new JogadorDTO(partidaJogador.getJogador().getId(),
 					partidaJogador.getJogador().getNome(),
 					partidaJogador.getPersonagem().getDescricao(),
 					partidaJogador.getPersonagem().getInfo(),
-					revelados(partidaJogador, partidaJogadoresFinal)
+					revelados(partidaJogador, partidaJogadores)
 			);
 		}).toList();
 	}
