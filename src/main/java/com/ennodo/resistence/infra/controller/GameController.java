@@ -22,15 +22,4 @@ public class GameController {
 	public ResponseEntity<List<JogadorDTO>> initGame(@RequestBody TodosJogadoresDTO todosJogadores) {
 		return ResponseEntity.ok(gameService.iniciarJogo(todosJogadores.getJogadores()));
 	}
-
-//	@GetMapping("/search/{name}")
-//	public ResponseEntity<GameResponseDTO> search(@PathVariable String name) {
-//		return ResponseEntity.ok(game.search(name));
-//	}
-//
-//	@GetMapping("/reveal")
-//	public ResponseEntity<List<PlayerResponseDTO>> reveal() {
-//		return ResponseEntity.ok(game.getPlayers().stream().map(PlayerResponseDTO::toPlayerResponseDTO).toList());
-//	}
-
 }

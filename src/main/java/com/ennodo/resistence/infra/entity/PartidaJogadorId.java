@@ -1,5 +1,7 @@
 package com.ennodo.resistence.infra.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.hibernate.Hibernate;
 
 import javax.persistence.Column;
@@ -8,6 +10,8 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
+@AllArgsConstructor
+@NoArgsConstructor
 public class PartidaJogadorId implements Serializable {
 	private static final long serialVersionUID = -2337629632937615105L;
 	@Column(name = "id_jogador", nullable = false)

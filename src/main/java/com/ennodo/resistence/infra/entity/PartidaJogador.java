@@ -7,9 +7,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.IntStream;
 
 @Entity
 @Table(name = "partida_jogador")
@@ -64,6 +64,10 @@ public class PartidaJogador {
 	}
 
 	public List<Integer> getIds() {
+		if (personagem.getIdsInfo() == null || personagem.getIdsInfo().isEmpty()) {
+			return new ArrayList<>();
+		}
+
 		return Arrays.stream(personagem.getIdsInfo().split(","))
 				.map(Integer::valueOf).toList();
 	}

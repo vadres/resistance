@@ -15,6 +15,9 @@ public class GrupoPartida {
 	@Column(name = "id", nullable = false)
 	private Integer id;
 
+	@Column(name = "atual")
+	private Boolean atual;
+
 	public Integer getId() {
 		return id;
 	}
@@ -23,4 +26,11 @@ public class GrupoPartida {
 		this.id = id;
 	}
 
+	public Boolean getAtual() {
+		return atual;
+	}
+
+	public void setAtual(Boolean atual) {
+		this.atual = atual;
+	}
 }
