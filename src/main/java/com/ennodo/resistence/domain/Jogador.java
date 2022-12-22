@@ -5,13 +5,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class Player {
-	public Player(String name, Integer character) {
-		this.characterEnum = CharacterEnum.byOrdinal(character);
+public class Jogador {
+	public Jogador(String name, Integer character) {
+		this.personagemEnum = PersonagemEnum.byOrdinal(character);
 		this.name = name;
 	}
 
 	String name;
 	@JsonIgnore
-	CharacterEnum characterEnum;
+	PersonagemEnum personagemEnum;
 }

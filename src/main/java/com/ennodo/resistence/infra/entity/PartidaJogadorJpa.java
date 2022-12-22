@@ -13,54 +13,54 @@ import java.util.List;
 
 @Entity
 @Table(name = "partida_jogador")
-public class PartidaJogador {
+public class PartidaJogadorJpa {
 	@EmbeddedId
-	private PartidaJogadorId id;
+	private PartidaJogadorIdJpa id;
 
 	@MapsId("idJogador")
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "id_jogador", nullable = false)
-	private Jogador jogador;
+	private JogadorJpa jogador;
 
 	@MapsId("idPartida")
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "id_partida", nullable = false)
-	private Partida partida;
+	private PartidaJpa partida;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "id_personagem", nullable = false)
-	private Personagem personagem;
+	private PersonagemJpa personagem;
 
-	public PartidaJogadorId getId() {
+	public PartidaJogadorIdJpa getId() {
 		return id;
 	}
 
-	public void setId(PartidaJogadorId id) {
+	public void setId(PartidaJogadorIdJpa id) {
 		this.id = id;
 	}
 
-	public Jogador getJogador() {
+	public JogadorJpa getJogador() {
 		return jogador;
 	}
 
-	public void setJogador(Jogador jogador) {
-		this.jogador = jogador;
+	public void setJogador(JogadorJpa jogadorJpa) {
+		this.jogador = jogadorJpa;
 	}
 
-	public Partida getPartida() {
+	public PartidaJpa getPartida() {
 		return partida;
 	}
 
-	public void setPartida(Partida partida) {
-		this.partida = partida;
+	public void setPartida(PartidaJpa partidaJpa) {
+		this.partida = partidaJpa;
 	}
 
-	public Personagem getPersonagem() {
+	public PersonagemJpa getPersonagem() {
 		return personagem;
 	}
 
-	public void setPersonagem(Personagem pPersonagem) {
-		this.personagem = pPersonagem;
+	public void setPersonagem(PersonagemJpa pPersonagemJpa) {
+		this.personagem = pPersonagemJpa;
 	}
 
 	public List<Integer> getIds() {

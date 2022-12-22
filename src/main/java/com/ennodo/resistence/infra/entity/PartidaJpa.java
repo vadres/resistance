@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "partida")
-public class Partida {
+public class PartidaJpa {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
@@ -20,7 +20,7 @@ public class Partida {
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "id_jogo", nullable = false)
-	private Jogo jogo;
+	private JogoJpa jogoJpa;
 
 	@Column(name = "atual")
 	private Boolean atual;
@@ -33,7 +33,7 @@ public class Partida {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_grupo")
-	private GrupoPartida grupo;
+	private GrupoPartidaJpa grupo;
 
 	public Integer getId() {
 		return id;
@@ -43,12 +43,12 @@ public class Partida {
 		this.id = id;
 	}
 
-	public Jogo getJogo() {
-		return jogo;
+	public JogoJpa getJogo() {
+		return jogoJpa;
 	}
 
-	public void setJogo(Jogo jogo) {
-		this.jogo = jogo;
+	public void setJogo(JogoJpa jogoJpa) {
+		this.jogoJpa = jogoJpa;
 	}
 
 	public Boolean getAtual() {
@@ -75,11 +75,11 @@ public class Partida {
 		this.espioes = espioes;
 	}
 
-	public GrupoPartida getGrupo() {
+	public GrupoPartidaJpa getGrupo() {
 		return grupo;
 	}
 
-	public void setGrupo(GrupoPartida grupo) {
+	public void setGrupo(GrupoPartidaJpa grupo) {
 		this.grupo = grupo;
 	}
 }

@@ -12,7 +12,7 @@ import java.util.Objects;
 @Embeddable
 @AllArgsConstructor
 @NoArgsConstructor
-public class PartidaJogadorId implements Serializable {
+public class PartidaJogadorIdJpa implements Serializable {
 	private static final long serialVersionUID = -2337629632937615105L;
 	@Column(name = "id_jogador", nullable = false)
 	private Integer idJogador;
@@ -40,7 +40,7 @@ public class PartidaJogadorId implements Serializable {
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-		PartidaJogadorId entity = (PartidaJogadorId) o;
+		PartidaJogadorIdJpa entity = (PartidaJogadorIdJpa) o;
 		return Objects.equals(this.idPartida, entity.idPartida) &&
 				Objects.equals(this.idJogador, entity.idJogador);
 	}

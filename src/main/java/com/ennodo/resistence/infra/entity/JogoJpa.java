@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "jogo")
-public class Jogo {
+public class JogoJpa {
 	@Id
 	@Column(name = "id", nullable = false)
 	private Integer id;

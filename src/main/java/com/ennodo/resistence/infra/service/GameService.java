@@ -1,14 +1,15 @@
 package com.ennodo.resistence.infra.service;
 
+import com.ennodo.resistence.domain.TipoJogoEnum;
 import com.ennodo.resistence.infra.dto.GameResponseDTO;
 import com.ennodo.resistence.infra.dto.JogadorDTO;
-import com.ennodo.resistence.infra.entity.GrupoPartida;
-import com.ennodo.resistence.infra.entity.Jogador;
-import com.ennodo.resistence.infra.entity.Jogo;
-import com.ennodo.resistence.infra.entity.JogoPersonagem;
-import com.ennodo.resistence.infra.entity.Partida;
-import com.ennodo.resistence.infra.entity.PartidaJogador;
-import com.ennodo.resistence.infra.entity.PartidaJogadorId;
+import com.ennodo.resistence.infra.entity.GrupoPartidaJpa;
+import com.ennodo.resistence.infra.entity.JogadorJpa;
+import com.ennodo.resistence.infra.entity.JogoJpa;
+import com.ennodo.resistence.infra.entity.JogoPersonagemJpa;
+import com.ennodo.resistence.infra.entity.PartidaJpa;
+import com.ennodo.resistence.infra.entity.PartidaJogadorJpa;
+import com.ennodo.resistence.infra.entity.PartidaJogadorIdJpa;
 import com.ennodo.resistence.infra.repository.GrupoPartidaRepository;
 import com.ennodo.resistence.infra.repository.JogadorRepository;
 import com.ennodo.resistence.infra.repository.JogoPersonagemRepository;
@@ -37,10 +38,10 @@ public class GameService {
 	private final PersonagemRepository personagemRepository;
 
 	public GameResponseDTO buscarJogadores() {
-		List<PartidaJogador> partidaJogadores = partidaJogadorRepository.buscarJogadoresJogoAtual();
+		List<PartidaJogadorJpa> partidaJogadoreJpas = partidaJogadorRepository.buscarJogadoresJogoAtual();
 
-		if (partidaJogadores == null || partidaJogadores.isEmpty()) {
-			List<Jogador> jogadores = jogadorRepository.findAll();
+		if (partidaJogadoreJpas == null || partidaJogadoreJpas.isEmpty()) {
+			List<JogadorJpa> jogadores = jogadorRepository.findAll();
 			return new GameResponseDTO(
 					jogadores.stream().map(JogadorDTO::toDTO).toList(),
 					GameResponseDTO.Fase.JOGO_NOVO.getValor()
@@ -48,12 +49,12 @@ public class GameService {
 		}
 
 		return new GameResponseDTO(
-				partidaJogadores.stream().map(partidaJogador -> (
-					new JogadorDTO(partidaJogador.getJogador().getId(),
-							partidaJogador.getJogador().getNome(),
-							partidaJogador.getPersonagem().getDescricao(),
-							partidaJogador.getPersonagem().getInfo(),
-							revelados(partidaJogador, partidaJogadores)
+				partidaJogadoreJpas.stream().map(partidaJogadorJpa -> (
+					new JogadorDTO(partidaJogadorJpa.getJogador().getId(),
+							partidaJogadorJpa.getJogador().getNome(),
+							partidaJogadorJpa.getPersonagem().getDescricao(),
+							partidaJogadorJpa.getPersonagem().getInfo(),
+							revelados(partidaJogadorJpa, partidaJogadoreJpas)
 					)
 				)).toList(),
 				GameResponseDTO.Fase.JOGO_JA_INICIADO.getValor()
@@ -61,61 +62,61 @@ public class GameService {
 	}
 
 	@Transactional
-	public List<JogadorDTO> iniciarJogo(List<JogadorDTO> jogadoresDTO) {
-		List<Jogador> jogadores = jogadorRepository.buscarPorIds(
+	public List<JogadorDTO> iniciarJogo(List<JogadorDTO> jogadoresDTO, Integer tipoJogo) {
+		List<JogadorJpa> jogadores = jogadorRepository.buscarPorIds(
 			jogadoresDTO.stream().map(JogadorDTO::getId).toList()
 		);
 
 		Collections.shuffle(jogadores, new Random());
 
-		Jogo jogo = jogoRepository.findByQtdJogadores(jogadores.size());
+		JogoJpa jogoJpa = jogoRepository.findByQtdJogadores(jogadores.size());
 
-		List<JogoPersonagem> jogoPersonagems = jogoPersonagemRepository
-				.buscarPersonagens(jogo.getId());
+		List<JogoPersonagemJpa> jogoPersonagems = jogoPersonagemRepository
+				.buscarPersonagens(jogoJpa.getId(), tipoJogo);
 		Collections.shuffle(jogoPersonagems, new Random());
 
-		GrupoPartida grupoPartida = new GrupoPartida();
+		GrupoPartidaJpa grupoPartida = new GrupoPartidaJpa();
 		grupoPartida.setAtual(true);
 		grupoPartida = grupoPartidaRepository.save(grupoPartida);
 		grupoPartidaRepository.atualizarGruposAnteriores(grupoPartida.getId());
 
-		Partida partida = new Partida();
-		partida.setGrupo(grupoPartida);
-		partida.setJogo(jogo);
-		partida.setAtual(true);
-		partida = partidaRepository.save(partida);
-		partidaRepository.atualizarPartidasAnteriores(partida.getId());
+		PartidaJpa partidaJpa = new PartidaJpa();
+		partidaJpa.setGrupo(grupoPartida);
+		partidaJpa.setJogo(jogoJpa);
+		partidaJpa.setAtual(true);
+		partidaJpa = partidaRepository.save(partidaJpa);
+		partidaRepository.atualizarPartidasAnteriores(partidaJpa.getId());
 
-		final List<PartidaJogador> partidaJogadores = new ArrayList<>();
+		final List<PartidaJogadorJpa> partidaJogadoreJpas = new ArrayList<>();
 		int i = 0;
-		for (Jogador jogador: jogadores) {
-			JogoPersonagem jogoPersonagem = jogoPersonagems.get(i);
+		for (JogadorJpa jogadorJpa : jogadores) {
+			JogoPersonagemJpa jogoPersonagem = jogoPersonagems.get(i);
 			if (jogoPersonagem.getQtdPersonagem() == 1) i++;
 			else jogoPersonagem.setQtdPersonagem( jogoPersonagem.getQtdPersonagem() - 1);
 
-			PartidaJogadorId partidaJogadorId = new PartidaJogadorId(jogador.getId(), partida.getId());
-			PartidaJogador partidaJogador = new PartidaJogador();
-			partidaJogador.setId(partidaJogadorId);
-			partidaJogador.setPartida(partida);
-			partidaJogador.setPersonagem(jogoPersonagem.getPersonagem());
-			partidaJogador.setJogador(jogador);
+			PartidaJogadorIdJpa partidaJogadorIdJpa = new PartidaJogadorIdJpa(jogadorJpa.getId(), partidaJpa.getId());
+			PartidaJogadorJpa partidaJogadorJpa = new PartidaJogadorJpa();
+			partidaJogadorJpa.setId(partidaJogadorIdJpa);
+			partidaJogadorJpa.setPartida(partidaJpa);
+			partidaJogadorJpa.setPersonagem(jogoPersonagem.getPersonagem());
+			partidaJogadorJpa.setJogador(jogadorJpa);
 
-			partidaJogadores.add(partidaJogadorRepository.save(partidaJogador));
+			partidaJogadoreJpas.add(partidaJogadorRepository.save(partidaJogadorJpa));
 		}
 
-		return partidaJogadores.stream().map(partidaJogador -> (
-			new JogadorDTO(partidaJogador.getJogador().getId(),
-					partidaJogador.getJogador().getNome(),
-					partidaJogador.getPersonagem().getDescricao(),
-					partidaJogador.getPersonagem().getInfo(),
-					revelados(partidaJogador, partidaJogadores)
+		return partidaJogadoreJpas.stream().map(partidaJogadorJpa -> (
+			new JogadorDTO(partidaJogadorJpa.getJogador().getId(),
+					partidaJogadorJpa.getJogador().getNome(),
+					partidaJogadorJpa.getPersonagem().getDescricao(),
+					partidaJogadorJpa.getPersonagem().getInfo(),
+					revelados(partidaJogadorJpa, partidaJogadoreJpas)
 			)
 		)).toList();
 	}
 
-	private List<String> revelados(PartidaJogador partidaJogador,  List<PartidaJogador> partidaJogadores) {
-		return partidaJogadores.stream()
-				.filter(pj -> partidaJogador.getIds().contains(pj.getJogador().getId()))
+	private List<String> revelados(PartidaJogadorJpa partidaJogadorJpa, List<PartidaJogadorJpa> partidaJogadoreJpas) {
+		return partidaJogadoreJpas.stream()
+				.filter(pj -> partidaJogadorJpa.getIds().contains(pj.getJogador().getId()))
 				.map(pj -> pj.getJogador().getNome())
 				.toList();
 	}

@@ -1,12 +1,10 @@
 package com.ennodo.resistence.infra.dto;
 
-import com.ennodo.resistence.infra.entity.Jogador;
-import com.ennodo.resistence.infra.entity.JogoPersonagem;
+import com.ennodo.resistence.infra.entity.JogadorJpa;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -19,10 +17,10 @@ public class JogadorDTO {
 	private String info;
 	private List<String> revelados;
 
-	public static JogadorDTO toDTO(Jogador jogador) {
+	public static JogadorDTO toDTO(JogadorJpa jogadorJpa) {
 		JogadorDTO dto = new JogadorDTO();
-		dto.setId(jogador.getId());
-		dto.setNome(jogador.getNome());
+		dto.setId(jogadorJpa.getId());
+		dto.setNome(jogadorJpa.getNome());
 		return dto;
 	}
 }

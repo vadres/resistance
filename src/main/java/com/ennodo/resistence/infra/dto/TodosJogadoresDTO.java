@@ -9,4 +9,5 @@ import java.util.List;
 @Setter
 public class TodosJogadoresDTO {
 	List<JogadorDTO> jogadores;
+	Integer tipoJogo;
 }

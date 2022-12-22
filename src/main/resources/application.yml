@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    username: postgres
+    url: jdbc:postgresql://localhost:5400/resistance
+    password: postgres
+  jpa:
+    properties:
+      hibernate:
+        format_sql: 'true'
+    show-sql: 'true'

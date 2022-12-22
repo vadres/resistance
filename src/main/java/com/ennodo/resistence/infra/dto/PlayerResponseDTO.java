@@ -1,6 +1,6 @@
 package com.ennodo.resistence.infra.dto;
 
-import com.ennodo.resistence.domain.Player;
+import com.ennodo.resistence.domain.Jogador;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +12,7 @@ public class PlayerResponseDTO {
 	String name;
 	String function;
 
-	public static PlayerResponseDTO toPlayerResponseDTO(Player player) {
-		return new PlayerResponseDTO(player.getName(), player.getCharacterEnum().name());
+	public static PlayerResponseDTO toPlayerResponseDTO(Jogador jogador) {
+		return new PlayerResponseDTO(jogador.getName(), jogador.getPersonagemEnum().name());
 	}
 }

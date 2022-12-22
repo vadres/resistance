@@ -20,6 +20,6 @@ public class GameController {
 
 	@PostMapping("/iniciar")
 	public ResponseEntity<List<JogadorDTO>> initGame(@RequestBody TodosJogadoresDTO todosJogadores) {
-		return ResponseEntity.ok(gameService.iniciarJogo(todosJogadores.getJogadores()));
+		return ResponseEntity.ok(gameService.iniciarJogo(todosJogadores.getJogadores(), todosJogadores.getTipoJogo()));
 	}
 }
