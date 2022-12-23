@@ -1,15 +1,14 @@
 package com.ennodo.resistence.infra.service;
 
-import com.ennodo.resistence.domain.TipoJogoEnum;
 import com.ennodo.resistence.infra.dto.GameResponseDTO;
 import com.ennodo.resistence.infra.dto.JogadorDTO;
 import com.ennodo.resistence.infra.entity.GrupoPartidaJpa;
 import com.ennodo.resistence.infra.entity.JogadorJpa;
 import com.ennodo.resistence.infra.entity.JogoJpa;
 import com.ennodo.resistence.infra.entity.JogoPersonagemJpa;
-import com.ennodo.resistence.infra.entity.PartidaJpa;
-import com.ennodo.resistence.infra.entity.PartidaJogadorJpa;
 import com.ennodo.resistence.infra.entity.PartidaJogadorIdJpa;
+import com.ennodo.resistence.infra.entity.PartidaJogadorJpa;
+import com.ennodo.resistence.infra.entity.PartidaJpa;
 import com.ennodo.resistence.infra.repository.GrupoPartidaRepository;
 import com.ennodo.resistence.infra.repository.JogadorRepository;
 import com.ennodo.resistence.infra.repository.JogoPersonagemRepository;
@@ -116,7 +115,7 @@ public class GameService {
 
 	private List<String> revelados(PartidaJogadorJpa partidaJogadorJpa, List<PartidaJogadorJpa> partidaJogadoreJpas) {
 		return partidaJogadoreJpas.stream()
-				.filter(pj -> partidaJogadorJpa.getIds().contains(pj.getJogador().getId()))
+				.filter(pj -> partidaJogadorJpa.getIds().contains(pj.getPersonagem().getId()) && !pj.getJogador().getId().equals(partidaJogadorJpa.getJogador().getId()))
 				.map(pj -> pj.getJogador().getNome())
 				.toList();
 	}

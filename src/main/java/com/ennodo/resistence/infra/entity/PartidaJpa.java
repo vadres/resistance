@@ -60,7 +60,7 @@ public class PartidaJpa {
 	}
 
 	public Boolean getResistencia() {
-		return resistencia;
+		return Boolean.TRUE.equals(resistencia);
 	}
 
 	public void setResistencia(Boolean resistencia) {
@@ -68,7 +68,7 @@ public class PartidaJpa {
 	}
 
 	public Boolean getEspioes() {
-		return espioes;
+		return Boolean.TRUE.equals(espioes);
 	}
 
 	public void setEspioes(Boolean espioes) {
