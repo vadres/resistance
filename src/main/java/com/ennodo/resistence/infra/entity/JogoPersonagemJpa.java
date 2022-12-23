@@ -39,7 +39,7 @@ public class JogoPersonagemJpa {
 					.ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
 	private JogoJpa jogo;
 
-	@Column(name = "qtd_personagem", nullable = false)
+	@Column(name = "qtd_personagem", nullable = false, updatable = false)
 	private Integer qtdPersonagem;
 
 	@Column(name = "tipo_jogo", nullable = false)

@@ -21,8 +21,8 @@ public interface PartidaRepository extends JpaRepository<PartidaJpa, Integer> {
 	@Query("update PartidaJpa p set p.resistencia = true where p.id = :id")
 	void vencedorResistencia(Integer id);
 
-	@Query("select p from PartidaJpa p join fetch p.grupo where p.id = :id ")
-	Optional<PartidaJpa> findOneById(Integer id);
+	@Query("select p from PartidaJpa p join fetch p.grupo where p.atual = true ")
+	Optional<PartidaJpa> findPartidaAtual();
 
 	List<PartidaJpa> findByGrupo_Id(Integer grupo);
 }

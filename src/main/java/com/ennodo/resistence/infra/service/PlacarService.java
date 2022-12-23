@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -23,7 +24,7 @@ public class PlacarService {
 
     @Transactional
     public void atualizarPlacar(AtualizarPlacarDTO placar) {
-        PartidaJpa partida = partidaRepository.findOneById(placar.partida())
+        PartidaJpa partida = partidaRepository.findPartidaAtual()
                 .orElseThrow(RuntimeException::new);
 
         if (VencedorEnum.ESPIOES.equals(placar.vencedor())) {
@@ -34,10 +35,11 @@ public class PlacarService {
     }
 
     public PlacarDTO buscarPlacar() {
-        GrupoPartidaJpa grupo = grupoPartidaRepository.findByAtual(true)
-                .orElseThrow(() -> new RuntimeException("Sem partida ativa!"));
+        Optional<GrupoPartidaJpa> grupo = grupoPartidaRepository.findByAtual(true);
+        if (grupo.isEmpty())
+            return new PlacarDTO(0L, 0L);
 
-        List<PartidaJpa> partidas = partidaRepository.findByGrupo_Id(grupo.getId());
+        List<PartidaJpa> partidas = partidaRepository.findByGrupo_Id(grupo.get().getId());
         long resitencia = partidas.stream().filter(PartidaJpa::getResistencia).count();
         long espioes = partidas.stream().filter(PartidaJpa::getEspioes).count();
 

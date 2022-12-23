@@ -1,5 +1,7 @@
 package com.ennodo.resistence.infra.entity;
 
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "grupo_partida")
+@NoArgsConstructor
 public class GrupoPartidaJpa {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,6 +20,10 @@ public class GrupoPartidaJpa {
 
 	@Column(name = "atual")
 	private Boolean atual;
+
+	public GrupoPartidaJpa(Boolean atual) {
+		this.atual = atual;
+	}
 
 	public Integer getId() {
 		return id;

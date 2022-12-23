@@ -74,8 +74,8 @@ public class GameService {
 				.buscarPersonagens(jogoJpa.getId(), tipoJogo);
 		Collections.shuffle(jogoPersonagems, new Random());
 
-		GrupoPartidaJpa grupoPartida = new GrupoPartidaJpa();
-		grupoPartida.setAtual(true);
+		GrupoPartidaJpa grupoPartida = grupoPartidaRepository.findByAtual(true)
+						.orElse(new GrupoPartidaJpa(true));
 		grupoPartida = grupoPartidaRepository.save(grupoPartida);
 		grupoPartidaRepository.atualizarGruposAnteriores(grupoPartida.getId());
 
@@ -120,4 +120,22 @@ public class GameService {
 				.toList();
 	}
 
+	@Transactional
+	public void finalizarPartida() {
+		PartidaJpa partidaJpa = partidaRepository.findPartidaAtual().orElseThrow();
+		partidaJpa.setAtual(false);
+		partidaRepository.save(partidaJpa);
+	}
+
+	@Transactional
+	public void resetarJogo() {
+		PartidaJpa partidaJpa = partidaRepository.findPartidaAtual().orElseThrow();
+		GrupoPartidaJpa grupoPartidaJpa = grupoPartidaRepository.findByAtual(true).orElseThrow();
+
+		partidaJpa.setAtual(false);
+		grupoPartidaJpa.setAtual(false);
+
+		partidaRepository.save(partidaJpa);
+		grupoPartidaRepository.save(grupoPartidaJpa);
+	}
 }

@@ -22,4 +22,16 @@ public class GameController {
 	public ResponseEntity<List<JogadorDTO>> initGame(@RequestBody TodosJogadoresDTO todosJogadores) {
 		return ResponseEntity.ok(gameService.iniciarJogo(todosJogadores.getJogadores(), todosJogadores.getTipoJogo()));
 	}
+
+	@PostMapping("/resetar")
+	public ResponseEntity<Void> resetar() {
+		gameService.resetarJogo();
+		return ResponseEntity.ok().build();
+	}
+
+	@PostMapping("/finalizarPartida")
+	public ResponseEntity<Void> finalizar() {
+		gameService.finalizarPartida();
+		return ResponseEntity.ok().build();
+	}
 }
